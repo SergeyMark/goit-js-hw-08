@@ -1,8 +1,8 @@
 import throttle from 'lodash.throttle';
 
 const feedBackForm = document.querySelector('.feedback-form');
-const email = document.querySelector('input');
-const message = document.querySelector('textarea');
+const emailEl = document.querySelector('input');
+const messageEl = document.querySelector('textarea');
 
 const FORM_KEY = "feedback-form-state";
 
@@ -12,12 +12,12 @@ outLocalStorage();
 // в которых сохраняй текущие значения полей формы. Пусть ключом для хранилища будет строка "feedback-form-state".
 // Сделай так, чтобы хранилище обновлялось не чаще чем раз в 500 миллисекунд. Для этого добавь в проект и используй библиотеку lodash.throttle.
 feedBackForm.addEventListener('input', throttle(function(){
-    const emailEl = email.value;
-    const messageEl = message.value;
+    const email = emailEl.value;
+    const message = messageEl.value;
 
     const formDataInput = {
-        emailEl,
-        messageEl
+        email,
+        message
     }
 
     localStorage.setItem(FORM_KEY, JSON.stringify(formDataInput));
