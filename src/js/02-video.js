@@ -25,7 +25,6 @@ player.setCurrentTime(localStorage.getItem(LOCAL_KEY)).then(function(seconds) {
     }
 });
 
-
 player.on('timeupdate', throttle(function(currentTime){
     localStorage.setItem('seconds', JSON.stringify(currentTime.seconds))
 }, 10000));
