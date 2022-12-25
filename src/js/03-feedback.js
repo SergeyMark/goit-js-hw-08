@@ -4,6 +4,7 @@ const feedBackForm = document.querySelector('.feedback-form');
 const emailEl = document.querySelector('input');
 const messageEl = document.querySelector('textarea');
 
+
 const FORM_KEY = "feedback-form-state";
 
 outLocalStorage();
@@ -24,30 +25,27 @@ feedBackForm.addEventListener('input', throttle(function(){
 }, 500));
 
 // При сабмите формы очищай хранилище и поля формы, а также выводи объект с полями email, message и текущими их значениями в консоль.
-feedBackForm.addEventListener('click', onSubmitRemove);
+feedBackForm.addEventListener('submit', onSubmitRemove);
 
 function onSubmitRemove(event) {
     event.preventDefault();
 
-    const consoleIn = localStorage.getItem(FORM_KEY);
-    console.log(JSON.parse(consoleIn));
+    if (emailEl.value !== "" && messageEl.value !== "") {
+        const consoleIn = localStorage.getItem(FORM_KEY);
+        console.log(JSON.parse(consoleIn));
     
-    if (event.target.nodeName === 'BUTTON') {
         event.currentTarget.reset();
-        localStorage.removeItem(FORM_KEY); 
+        localStorage.removeItem(FORM_KEY);  
     }
-
 }
 
 // При загрузке страницы проверяй состояние хранилища, и если там есть сохраненные данные, заполняй ими поля формы. В противном случае поля должны быть пустыми.
 function outLocalStorage() {
     const saveOutPut = localStorage.getItem(FORM_KEY);
-
     if (saveOutPut) {
         const parsInput = JSON.parse(saveOutPut);
-        // console.log(parsInput)
-        message.value = parsInput.messageEl;
-        email.value = parsInput.emailEl;
+        messageEl.value = parsInput.message;
+        emailEl.value = parsInput.email;
     }
 }
 
