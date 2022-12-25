@@ -6,10 +6,11 @@ const player = new Player(iframe);
 
 const LOCAL_KEY = 'videoplayer-current-time';
 
-player.on('timeupdate', function(currentTime) {
+
+player.on('timeupdate', throttle(function(currentTime) {
     const second = currentTime.seconds;
     localStorage.setItem(LOCAL_KEY, JSON.stringify(second));
-});
+}, 1500));
 
 player.setCurrentTime(localStorage.getItem(LOCAL_KEY)).then(function(seconds) {
     // seconds = the actual time that the player seeked to
@@ -24,9 +25,5 @@ player.setCurrentTime(localStorage.getItem(LOCAL_KEY)).then(function(seconds) {
             break;
     }
 });
-
-player.on('timeupdate', throttle(function(currentTime){
-    localStorage.setItem('seconds', JSON.stringify(currentTime.seconds))
-}, 10000));
 
 
